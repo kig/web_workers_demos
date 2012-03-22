@@ -1,0 +1,60 @@
+<html>
+<body>
+  <style>
+    div {
+      -webkit-transition: opacity 0.5s;
+    }
+    canvas {
+      background-color: #444;
+      border: 4px solid #444;
+    }
+  </style>
+  <script src="jacobi_worker.js"></script>
+  <script src="main.js"></script>
+  <div>
+    <p>Note: The first run timings are slow because the JIT hasn't optimized the code yet.</p>
+    <p>
+      <label for="workercommand">Worker command</label>
+      <select id="workercommand" onchange="window.workerCommand = this.value;">
+        <option>noop</option>
+        <option>memcpy</option>
+        <option>average3</option>
+      </select>
+    </p>
+    <p>
+      <label for="usetransferables">Use Transferables</label>
+      <input type="checkbox" checked id="usetransferables">
+    </p>
+    <p>
+      <label for="combineresults">Combine results</label>
+      <input type="checkbox" checked id="combineresults">
+    </p>
+    <p>
+      <input type="range" min="1" max="64" value="16" id="workunitcount" onchange="document.getElementById('wuc').textContent=this.value;">
+      <label for="workunitcount"><span id="wuc">16</span> work units</label>
+    </p>
+    <p>
+      <input type="range" min="1" max="16" value="4" id="workunitsize" onchange="document.getElementById('wus').textContent=this.value;">
+      <label for="workunitsize"><span id="wus">4</span> MB work unit size</label>
+    </p>
+    <p>
+      <label for="singlethreaded">Single-threaded</label>
+      <input type="checkbox" id="singlethreaded" onchange="document.getElementById('wcc').style.opacity=this.checked?0:1">
+    </p>
+    <p id="wcc">
+      <input type="range" min="1" max="64" value="16" id="workercount" onchange=";document.getElementById('wc').textContent=this.value;">
+      <label for="workercount"><span id="wc">16</span> workers</label>
+    </p>
+    <button id="runbutton" onclick="runTest()">Run test</button>
+    <button id="pausebutton" onclick="pauseTest()">Pause test</button>
+    <p>
+      <label for="logtoconsole">Log to console only</label>
+      <input type="checkbox" id="logtoconsole">
+    </p>
+    <p id="result"></p>
+    <p>
+      <canvas id="resultCanvas" width="720" height="480"></canvas>
+    </p>
+  </div>
+</body>
+</html>
