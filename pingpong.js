@@ -14,9 +14,9 @@ worker.onmessage = function(evt) {
     log('sum: '+sum);
     log('amount of data passed: '+((evt.data.idx+1)*buf.byteLength / 1e9)+' GB');
   } else {
-    // second arg to webkitPostMessage is an array of objects to 
+    // second arg to postMessage is an array of objects to 
     // yield to the receiver
-    worker.webkitPostMessage({foobar: buf, idx: evt.data.idx+1}, [buf]);
+    worker.postMessage({foobar: buf, idx: evt.data.idx+1}, [buf]);
   }
 };
 // send initial message of 100x pingpong
