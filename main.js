@@ -35,7 +35,7 @@ function SetupWorkers(workers, N, worker_script, ackMessage) {
 function setupCombine(ackMessage) {
   var combiner = new Worker('combine_worker.js');
   combiner.onmessage = ackMessage;
-  combiner.webkitPostMessage(['init',0], []);
+  combiner.postMessage(['init',0], []);
   return combiner;
 }
 
@@ -132,7 +132,7 @@ function init() {
       }
       units = [];
       run++;
-      webkitRequestAnimationFrame(function() {
+      (window.requestAnimationFrame || window.webkitRequestAnimationFrame)(function() {
         if (!paused) {
           runTest();
         }
@@ -214,7 +214,7 @@ function init() {
       if (window.singleThreaded) {
         ackMessage({data: [i, WorkerCommands[cmd].apply(WorkerCommands, [src, dst]), src, dst]});
       } else if (window.useTransferables) {
-        jacobi_workers[i%window.workerCount].webkitPostMessage([cmd, i, src, dst, true], [src, dst]);
+        jacobi_workers[i%window.workerCount].postMessage([cmd, i, src, dst, true], [src, dst]);
       } else {
         jacobi_workers[i%window.workerCount].postMessage([cmd, i, src, dst, false]);
       }
