@@ -1,4 +1,3 @@
-
 WorkerCommands = {
   average3: function (src, dst) {
     var i,l;
@@ -41,6 +40,6 @@ self.onmessage = function(event) {
   var src = data[2]; // ArrayBuffer (transfered)
   var dst = data[3]; // ArrayBuffer (transfered)
   var ret = WorkerCommands[cmd].apply(WorkerCommands, data.slice(2));
-  webkitPostMessage([worker_id, ret, src, dst], [src, dst]);
+  postMessage([worker_id, ret, src, dst], [src, dst]);
 };
 
